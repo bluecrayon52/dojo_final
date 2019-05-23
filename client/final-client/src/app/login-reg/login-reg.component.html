@@ -1,0 +1,72 @@
+<div class="wrap">
+  <h1 class="mb-4">Login and Registration</h1>
+  <hr>
+  <div class="card-group">
+      <div class="card border-0 mr-5">
+          <div class="card-body">
+              <h4 class="card-title">Register Here!</h4>
+              <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.reg_main}}</small>
+              <hr>
+              <form [formGroup]="regForm" (ngSubmit)="onRegister()">
+                  <div class="form-group col">
+                      <label for="first_name">First Name:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.first_name}}</small>
+                      <input formControlName="first_name" class="form-control" type='text' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.first_name}" id="first_name" name='first_name'>
+                  </div>
+                  <div class="form-group col">
+                      <label for="last_name">Last Name:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.last_name}}</small>
+                      <input formControlName="last_name" class="form-control" type='text' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.last_name}" id="last_name" name='last_name'>
+                  </div>
+                  <div class="form-group col">
+                    <label for="birthday">Birthday:</label>
+                    <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.birthday}}</small>
+                    <input formControlName="birthday" class="form-control" type='date' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.birthday}" id="birthday" name='birthday'>
+                </div>
+                  <div class="form-group col">
+                      <label for="email">Email:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.email}}</small>
+                      <input formControlName="email" class="form-control" type='text' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.email}" id="email" name='email'>
+                  </div>
+                  <div class="form-group col">
+                      <label for="password">Password:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.password}}</small>
+                      <input formControlName="password" class="form-control" type='password' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.password}" id="password" name='password'>
+                  </div>
+                  <div class="form-group col">
+                      <label for="confirm_password">Confirm Password:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{reg_error_obj.confirm_password}}</small>
+                      <input formControlName="confirm_password" class="form-control" type='password' [ngClass] = "{'is-invalid' : reg_submitted && reg_error_obj.confirm_password}" id="confirm_password" name='confirm_password'>
+                  </div>
+                  <hr>
+                  <div class="row d-flex mr-1 justify-content-end">
+                      <button type="submit" class="form-group row btn btn-success">Register!</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div class="card border-0 ml-5">
+          <div class="card-body">
+              <small class="text-danger mb-3 ml-1 row">{{login_error_obj.login_main}}</small>
+              <h4 class="card-title">Login Here!</h4>
+              <hr>
+              <form [formGroup]="loginForm" (ngSubmit) ="onLogin()">
+                  <div class="form-group col">
+                      <label for="login_em">Email:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{login_error_obj.email}}</small>
+                      <input formControlName="email" class="form-control" type='text' [ngClass] = "{'is-invalid' : login_submitted && login_error_obj.email}" id="login_em" name='email'>
+                  </div>
+                  <div class="form-group col">
+                      <label for="login_pass">Password:</label>
+                      <small class="text-danger mb-3 ml-1 row">{{login_error_obj.password}}</small>
+                      <input formControlName="password" class="form-control" type='password' [ngClass] = "{'is-invalid' : login_submitted && login_error_obj.password}" id="login_pass" name='password'>
+                  </div>
+                  <hr>
+                  <div class="row d-flex mr-1 justify-content-end">
+                      <button type="submit" class="form-group row btn btn-success">Login!</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+    </div>
+</div>
