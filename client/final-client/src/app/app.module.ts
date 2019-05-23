@@ -8,12 +8,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NewquizComponent } from './newquiz/newquiz.component';
+import { QuestionComponent } from './question/question.component';
+import { AddquestionComponent } from './addquestion/addquestion.component';
+import { DisplayquestionComponent } from './displayquestion/displayquestion.component';
+import { YourscoreComponent } from './yourscore/yourscore.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginRegComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewquizComponent,
+    QuestionComponent,
+    AddquestionComponent,
+    DisplayquestionComponent,
+    YourscoreComponent
   ],
   imports: [
     BrowserModule,
