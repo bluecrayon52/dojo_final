@@ -10,7 +10,7 @@
   <nav class = "navbar">
       <button [routerLink]="['/dashboard']">Home</button>
       <button [routerLink]="['/newquiz']">Add a quiz</button>
-      <button [routerLink]="['/login-reg']">Logout</button>
+      <button [routerLink]="['/']">Logout</button>
   </nav>
   <div>
     <h1>All Quizzes</h1>
@@ -28,8 +28,8 @@
                 <td>Quiz Name</td>
                 <td>Quiz Score</td>
                 <td>
-                  <a href="/play">Play </a>
-                  <a href="/edit">Edit </a>
+                  <a href="/play/{{quizid}}">Play </a>
+                  <a href="/edit/{{quizid}}">Edit </a>
                   <a href="/delete">Delete </a>
                 </td>
               </tr>
