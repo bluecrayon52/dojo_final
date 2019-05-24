@@ -51,11 +51,11 @@ def build_quiz_dict(quiz, user_id):
 # get all of the quizzes in the DB, 
 # and if the current user has taken them, populate their latest score, 
 # else mark score as -1 to indicate current user has saved any scores for that quiz
-def get_all(request):
+def get_all(request, user_id):
     if request.method == "GET":
         # decode the byte string request body to unicode
         # and deserialize to a python object (dictionary)
-        user_id = json.loads(request.body.decode())['user_id']
+        # user_id = json.loads(request.body.decode())['user_id']
         quiz_list = []
         # build the quiz objects
         quizzes = Quiz.objects.all()
@@ -67,11 +67,11 @@ def get_all(request):
         return HttpResponse(serialized_quizzes, content_type="application/json", status=200)
 
 # get one quiz by quiz_id or return error message for no quiz found
-def get_one(request):
+def get_one(request, quiz_id, user_id):
     if request.method == "GET":
-        req = json.loads(request.body.decode())
-        quiz_id = req["quiz_id"]
-        user_id = req["user_id"]
+        # req = json.loads(request.body.decode())
+        # quiz_id = req["quiz_id"]
+        # user_id = req["user_id"]
         try:
             quiz = Quiz.objects.get(id=quiz_id)
         except:
@@ -151,22 +151,23 @@ def add_question(request):
             return HttpResponse(serialized_question, content_type="application/json", status=200)
 
 # delete a question, if authorized
-def delete_question(request):
-    delete_dict = json.loads(request.body.decode())
-    question_id = delete_dict["question_id"]
-    user_id = delete_dict["user_id"]
-    try: 
-        question = Question.objects.get(id=question_id)
-    except:
-        serialized_errors = json.dumps({"message": f"no question with id: {question_id} found"})
-        return HttpResponse(serialized_errors, content_type="application/json", status=400)
-    else:
-        if question.quiz.created_by.id != user_id:
-            serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {question.quiz.id}"})
+def delete_question(request, question_id, user_id):
+    if request.method == "DELETE":
+        # delete_dict = json.loads(request.body.decode())
+        # question_id = delete_dict["question_id"]
+        # user_id = delete_dict["user_id"]
+        try: 
+            question = Question.objects.get(id=question_id)
+        except:
+            serialized_errors = json.dumps({"message": f"no question with id: {question_id} found"})
             return HttpResponse(serialized_errors, content_type="application/json", status=400)
+        else:
+            if question.quiz.created_by.id != user_id:
+                serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {question.quiz.id}"})
+                return HttpResponse(serialized_errors, content_type="application/json", status=400)
 
-        question.delete()
-        return HttpResponse(json.dumps({"message": f"question with id: {question_id} has been deleted"}), content_type="application/json", status=200)
+            question.delete()
+            return HttpResponse(json.dumps({"message": f"question with id: {question_id} has been deleted"}), content_type="application/json", status=200)
 
 # create or update a score object for the current user and the quiz they took
 def save_score(request):
@@ -206,11 +207,11 @@ def save_score(request):
                 return HttpResponse(serialized_score, content_type="application/json", status=200)
 
 # delete a quiz, if authorized
-def delete_quiz(request):
+def delete_quiz(request, quiz_id, user_id):
     if request.method == "DELETE":
-        delete_dict = json.loads(request.body.decode())
-        quiz_id = delete_dict["quiz_id"]
-        user_id = delete_dict["user_id"]
+        # delete_dict = json.loads(request.body.decode())
+        # quiz_id = delete_dict["quiz_id"]
+        # user_id = delete_dict["user_id"]
         try:
             quiz = Quiz.objects.get(id=quiz_id)
         except: 
@@ -220,7 +221,7 @@ def delete_quiz(request):
             if quiz.created_by.id != user_id:
                 serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {quiz_id}"})
                 return HttpResponse(serialized_errors, content_type="application/json", status=400)
-                
+
             quiz.delete()
             return HttpResponse(json.dumps({"message": f"quiz with id: {quiz_id} has been deleted"}), content_type="application/json", status=200)
         pass
