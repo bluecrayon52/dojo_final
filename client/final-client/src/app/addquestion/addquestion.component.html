@@ -14,7 +14,6 @@
         <h1 class="card-title">Add A Question</h1>
         <hr>
         <form action="/addquestion" method="post">
-          {% csrf_token %}
             <div class="form-group col">
                 <label for="Question">Question</label>
                 <input class="form-control" type='text' id="Question" name='Question'>

@@ -19,17 +19,15 @@
               </tr>
             </thead>
             <tbody>
-              {% for quiz in quizzes %}
               <tr>
-                <td>{{ Quiz.name }}</td>
-                <td>{{ Quiz.score }}</td>
+                <td>Quiz Name</td>
+                <td>Quiz Score</td>
                 <td>
                   <a href="/play">Play</a>
                   <a href="/edit">Edit</a>
                   <a href="/delete">Delete</a>
                 </td>
               </tr>
-              {% endfor %}
             </tbody>
           </table>
     </div>
