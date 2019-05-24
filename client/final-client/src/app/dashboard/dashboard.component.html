@@ -20,9 +20,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Quiz Name</td>
-                <td>Quiz Score</td>
+              <tr *ngFor="let quiz of quizzes">
+                <td>quiz.name</td>
+                <td>quiz.score</td>
                 <td>
                   <a href="/play/{quizid}">Play </a>
                   <a href="/edit/{quizid}">Edit </a>
