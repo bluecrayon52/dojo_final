@@ -156,8 +156,8 @@ export class LoginRegComponent implements OnInit {
   
     this.loginregservice.registerUser(this.regForm.getRawValue()).subscribe(
       resp => {
-        alert(`User ${resp.first_name} ${resp.last_name} has been registered!`);
-      },
+        localStorage.setItem('currentUser', JSON.stringify(resp));
+        this.router.navigate(['/dashboard'])      },
       error => {
         this.reg_error_obj = {
           first_name: error.error.first_name,
