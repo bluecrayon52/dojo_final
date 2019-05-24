@@ -1,3 +1,27 @@
-<p>
-  displayquestion works!
-</p>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <nav class = "navbar">
+      <button [routerLink]="['/dashboard']">Home</button>
+      <button [routerLink]="['/newquiz']">Add a quiz</button>
+      <button [routerLink]="['/login-reg']">Logout</button>
+  </nav>
+  <h1>Your Quiz</h1>
+  <div class = "question">
+    <h3>Question #</h3>
+    <p>Question</p>
+    <input type="radio" name="answer" value="answer"> Answer #<br>
+  </div>
+  <app-addquestion></app-addquestion>
+</body>
+</html>

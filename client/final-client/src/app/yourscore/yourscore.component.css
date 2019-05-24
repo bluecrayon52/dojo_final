@@ -1,0 +1,19 @@
+
+
+
+.scorecube{
+    background-color: gray;
+    display:inline-block;
+    height: 150px;
+    width: 250px;
+    margin-left: 35%;
+}
+.yourscore{
+    text-align: center;
+}
+.lastscore{
+    text-align: center;
+    margin-top:20%;
+    font-size: 40px;
+    color: black;
+}
