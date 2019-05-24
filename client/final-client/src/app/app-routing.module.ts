@@ -9,11 +9,10 @@ import { DisplayquestionComponent } from './displayquestion/displayquestion.comp
 import { YourscoreComponent } from './yourscore/yourscore.component';
 
 const routes: Routes = [
-  {path: 'login-reg', component:LoginRegComponent},
+  {path: '', component:LoginRegComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'newquiz', component:NewquizComponent},
   {path: 'question', component:QuestionComponent},
-  {path: 'addquestion', component:AddquestionComponent},
   {path: 'yourquiz', component:DisplayquestionComponent},
   {path: 'yourscore', component:YourscoreComponent},
   {path: 'play', component:QuestionComponent},
