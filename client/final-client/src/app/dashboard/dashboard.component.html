@@ -8,13 +8,16 @@
 </head>
 <body>
   <nav class = "navbar">
-      <button [routerLink]="['/dashboard']">Home</button>
-      <button [routerLink]="['/newquiz']">Add a quiz</button>
-      <button [routerLink]="['/']">Logout</button>
+      <h1>Hello {{User.name}}</h1>
+      <div class= "nav">
+        <button class = "nav" [routerLink]="['/dashboard']">Home</button>
+        <button class = "nav" [routerLink]="['/newquiz']">Add a quiz</button>
+        <button class = "nav" [routerLink]="['/']">Logout</button>
+      </div>
   </nav>
   <div>
     <h1>All Quizzes</h1>
-    <div>
+    <div class = "container">
         <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -28,8 +31,8 @@
                 <td>Quiz Name</td>
                 <td>Quiz Score</td>
                 <td>
-                  <a href="/play/{{quizid}}">Play </a>
-                  <a href="/edit/{{quizid}}">Edit </a>
+                  <a href="/play/{quizid}">Play </a>
+                  <a href="/edit/{quizid}">Edit </a>
                   <a href="/delete">Delete </a>
                 </td>
               </tr>

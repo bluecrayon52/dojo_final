@@ -11,13 +11,22 @@
 </head>
 <body>
   <nav class = "navbar">
-      <button [routerLink]="['/dashboard']">Home</button>
-      <button [routerLink]="['/newquiz']">Add a quiz</button>
-      <button [routerLink]="['/']">Logout</button>
+      <h1>Hello {{User.name}}</h1>
+      <div class= "nav">
+        <button class = "nav" [routerLink]="['/dashboard']">Home</button>
+        <button class = "nav" [routerLink]="['/newquiz']">Add a quiz</button>
+        <button class = "nav" [routerLink]="['/']">Logout</button>
+      </div>
   </nav>
   <h1 class="yourscore">Your Score</h1>
   <div class="scorecube">
     <h3 class = "lastscore">3 out of 4</h3>
   </div>
+  <form action="/play/{{quizid}}" method="post">
+    <div class="row">
+        <button type="submit" class="form-group row btn btn-success">Save Score</button>
+        <button type="submit" class="form-group row btn btn-success">Try Again</button>
+    </div>
+  </form>
 </body>
 </html>
