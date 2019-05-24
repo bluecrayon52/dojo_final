@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginRegService } from './../login-reg.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-reg',
@@ -17,7 +18,7 @@ export class LoginRegComponent implements OnInit {
   reg_submitted = false;
   login_submitted = false;
 
-  constructor(private loginregservice: LoginRegService, private formBuilder: FormBuilder) { }
+  constructor(private loginregservice: LoginRegService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
@@ -213,6 +214,7 @@ export class LoginRegComponent implements OnInit {
         // let user = JSON.parse(localStorage.getItem('currentUser'));
         // console.log(user.first_name)
         // alert(`User ${resp.first_name} ${resp.last_name} has been logged in!`);
+        this.router.navigate(['/dashboard'])
       },
       error => {
         console.log(error);
