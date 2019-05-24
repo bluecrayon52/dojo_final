@@ -17,3 +17,10 @@
     font-size: 40px;
     color: black;
 }
+.nav{
+    display:inline-block;
+    margin-left:10px;
+    padding-left: 5px;
+    text-align: center;
+    align-content: center;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-displayquestion',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./displayquestion.component.css']
 })
 export class DisplayquestionComponent implements OnInit {
-
-  constructor() { }
+  quizid:number;
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.quizid = +this.route.snapshot.paramMap.get('quizid')
   }
 
 }

@@ -7,16 +7,17 @@ import { QuestionComponent } from './question/question.component';
 import { AddquestionComponent } from './addquestion/addquestion.component';
 import { DisplayquestionComponent } from './displayquestion/displayquestion.component';
 import { YourscoreComponent } from './yourscore/yourscore.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
-  {path: '', component:LoginRegComponent},
+  {path: '', pathMatch: 'full', component:LoginRegComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'newquiz', component:NewquizComponent},
-  {path: 'question', component:QuestionComponent},
-  {path: 'yourquiz', component:DisplayquestionComponent},
+  {path: 'edit/:quizid', component:DisplayquestionComponent},
   {path: 'yourscore', component:YourscoreComponent},
-  {path: 'play', component:QuestionComponent},
+  {path: 'play/:quizid', component:QuestionComponent},
   {path: 'edit', component:DisplayquestionComponent},
+  {path: '**', component:NotfoundComponent},
 ];
 
 @NgModule({
