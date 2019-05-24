@@ -11,8 +11,32 @@ export class QuizService {
 
   constructor(private http: HttpClient) { }
 
-  createQuiz(userData): Observable<any> {
-    return this.http.post(this.baseurl+'/user_api/create/', userData,
+  createQuiz(quizData): Observable<any> {
+    return this.http.post(this.baseurl+'/quiz_api/create/', quizData,
+    {headers: this.httpHeaders});
+  }
+  getAllQuizzes(user_id): Observable<any> {
+    return this.http.get(this.baseurl+'/quiz_api/get_all/' + user_id,
+    {headers: this.httpHeaders});
+  }
+  getQuiz(quizData): Observable<any> {
+    return this.http.get(this.baseurl+'/quiz_api/get_one/' + quizData.quiz_id + '/' + quizData.user_id,
+    {headers: this.httpHeaders});
+  }
+  deleteQuiz(quizData): Observable<any> {
+    return this.http.delete(this.baseurl+'/quiz_api/delete_quiz/'+ quizData.quiz_id + '/' + quizData.user_id,
+    {headers: this.httpHeaders});
+  }
+  addQuestion(quizData): Observable<any> {
+    return this.http.post(this.baseurl+'/quiz_api/add_question/', quizData,
+    {headers: this.httpHeaders});
+  }
+  deleteQuestion(quizData): Observable<any> {
+    return this.http.delete(this.baseurl+'/quiz_api/delete_question/'+ quizData.question_id + '/' + quizData.user_id,
+    {headers: this.httpHeaders});
+  }
+  saveScore(quizData): Observable<any> {
+    return this.http.post(this.baseurl+'/quiz_api/save_score/', quizData,
     {headers: this.httpHeaders});
   }
 }
