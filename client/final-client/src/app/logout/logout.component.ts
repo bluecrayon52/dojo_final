@@ -7,8 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./logout.component.css']
 })
 export class LogoutComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  user;
+  constructor(private router: Router) {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+   }
 
   ngOnInit() {
   }
