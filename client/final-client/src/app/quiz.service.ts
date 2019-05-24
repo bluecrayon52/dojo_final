@@ -12,6 +12,7 @@ export class QuizService {
   constructor(private http: HttpClient) { }
 
   createQuiz(quizData): Observable<any> {
+    console.log('in quiz.service.ts:', quizData);
     return this.http.post(this.baseurl+'/quiz_api/create/', quizData,
     {headers: this.httpHeaders});
   }

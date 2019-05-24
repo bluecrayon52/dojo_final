@@ -86,7 +86,9 @@ def get_one(request, quiz_id, user_id):
 # create a new quiz, initialize with name and user_id only 
 # return new quiz id and name
 def create(request):
+    print("Testing")
     if request.method == "POST":
+        print("In quiz_app,views", request.body.decode())
         quiz_dict = json.loads(request.body.decode())
         user_id = quiz_dict["user_id"]
         try: 

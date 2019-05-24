@@ -12,9 +12,10 @@
   <div>
     <h1>Add A Quiz</h1>
     <div class = "newquiz">
-      <form action="/newquiz/" method="post">
+      <form [formGroup]="quizForm" (ngSubmit)= "createQuiz()">
         <h4>Quiz Name</h4>
-        <input class="form-control" type='text' id="name" name='quizname'>
+        <small class="text-danger mb-3 ml-1 row">{{quizErrors.quizName}}</small>
+        <input formControlName="quizName" class="form-control" type='text' id="quizname" name='quizname'>
         <p></p>
         <button type="submit" class="form-group row btn btn-dark">Submit</button>
       </form>
