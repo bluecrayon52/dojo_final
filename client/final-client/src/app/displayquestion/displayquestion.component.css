@@ -7,3 +7,10 @@
     padding: 5px;
     margin-left: 40%;
 }
+.nav{
+    display:inline-block;
+    margin-left:10px;
+    padding-left: 5px;
+    text-align: center;
+    align-content: center;
+}

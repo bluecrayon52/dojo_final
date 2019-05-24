@@ -12,13 +12,16 @@
 </head>
 <body>
   <nav class = "navbar">
-      <button [routerLink]="['/dashboard']">Home</button>
-      <button [routerLink]="['/newquiz']">Add a quiz</button>
-      <button [routerLink]="['/login-reg']">Logout</button>
+      <h1>Hello {{User.name}}</h1>
+      <div class= "nav">
+        <button class = "nav" [routerLink]="['/dashboard']">Home</button>
+        <button class = "nav" [routerLink]="['/newquiz']">Add a quiz</button>
+        <button class = "nav" [routerLink]="['/']">Logout</button>
+      </div>
   </nav>
   <h1>Your Quiz</h1>
   <div class = "question">
-    <h3>Question #</h3>
+    <h3>Question # {{quizid}}</h3>
     <p>Question</p>
     <input type="radio" name="answer" value="answer"> Answer #<br>
   </div>

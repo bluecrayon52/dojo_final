@@ -13,6 +13,7 @@ import { QuestionComponent } from './question/question.component';
 import { AddquestionComponent } from './addquestion/addquestion.component';
 import { DisplayquestionComponent } from './displayquestion/displayquestion.component';
 import { YourscoreComponent } from './yourscore/yourscore.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { YourscoreComponent } from './yourscore/yourscore.component';
     QuestionComponent,
     AddquestionComponent,
     DisplayquestionComponent,
-    YourscoreComponent
+    YourscoreComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
