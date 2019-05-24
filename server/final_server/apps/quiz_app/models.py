@@ -8,6 +8,7 @@ import re
 
 class Quiz(models.Model):
     name = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, related_name="quizzes", on_delete=models.CASCADE)
     # questions implicit field
     # scores implicit field
 
