@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h1>All Quizzes</h1>
+    <div>
+        <table class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Quiz Name</th>
+                <th scope="col">Latest Score</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for quiz in quizzes %}
+              <tr>
+                <td>{{ Quiz.name }}</td>
+                <td>{{ Quiz.score }}</td>
+                <td>
+                  <a href="/play">Play</a>
+                  <a href="/edit">Edit</a>
+                  <a href="/delete">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+  </div>
+</body>
+</html>
