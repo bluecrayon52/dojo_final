@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Add a Quiz</title>
+</head>
+<body>
+  <nav class = "navbar">
+      <button [routerLink]="['/dashboard']">Home</button>
+      <button [routerLink]="['/newquiz']">Add a quiz</button>
+      <button [routerLink]="['/login-reg']">Logout</button>
+  </nav>
+  <div>
+    <h1>Add A Quiz</h1>
+    <div class = "newquiz">
+      <form action="/newquiz/" method="post">
+        <h4>Quiz Name</h4>
+        <input class="form-control" type='text' id="name" name='quizname'>
+        <p></p>
+        <button type="submit" class="form-group row btn btn-dark">Submit</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <nav class = "navbar">
+      <button [routerLink]="['/dashboard']">Home</button>
+      <button [routerLink]="['/newquiz']">Add a quiz</button>
+      <button [routerLink]="['/login-reg']">Logout</button>
+  </nav>
+  <div>
+    <h1>All Quizzes</h1>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Quiz Name</th>
+                <th scope="col">Latest Score</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Quiz Name</td>
+                <td>Quiz Score</td>
+                <td>
+                  <a href="/play">Play </a>
+                  <a href="/edit">Edit </a>
+                  <a href="/delete">Delete </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</body>
+</html>
