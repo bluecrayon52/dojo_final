@@ -10,6 +10,7 @@ import bcrypt
 # helper function to build quiz objects from django model 
 def build_quiz_dict(quiz, user_id):
     quiz_dict = { 
+        "id": quiz.id,
         "name": quiz.name,
         "created_by": {
             "id": quiz.created_by.id,
@@ -28,6 +29,7 @@ def build_quiz_dict(quiz, user_id):
     questions = quiz.questions.all()
     for question in questions:
         question_dict = {
+            "id": question.id,
             "text": question.text,
             "answers": []
         }
@@ -35,6 +37,7 @@ def build_quiz_dict(quiz, user_id):
         answers = question.answers.all()
         for answer in answers:
             answer_dict = {
+                "id": answer.id,
                 "text": answer.text,
                 "correct": answer.correct
             }
@@ -79,7 +82,8 @@ def get_one(request):
             serialized_quiz = json.dumps(build_quiz_dict(quiz, user_id))
             return HttpResponse(serialized_quiz, content_type="application/json", status=200)
 
-# create a new quiz, initialize with name and created_by only 
+# TODO add validation to a manager
+# create a new quiz, initialize with name and user_id only 
 # return new quiz id and name
 def create(request):
     if request.method == "POST":
@@ -99,13 +103,14 @@ def create(request):
             serialized_quiz = json.dumps(dict_obj)
             return HttpResponse(serialized_quiz, content_type="application/json", status=200)
 
-# add a question and answers to an existing quiz 
+# TODO add validation to a manager
+# add a question and answers to an existing quiz, if authorized
 # return the new question and answers
 def add_question(request):
     if request.method == "POST":
-        print(request.body.decode())
         question_dict = json.loads(request.body.decode())
         quiz_id = question_dict["quiz_id"]
+        user_id = question_dict["user_id"]
         text = question_dict["text"]
         answers = question_dict["answers"]
         try: 
@@ -114,6 +119,10 @@ def add_question(request):
             serialized_errors = json.dumps({"message": f"no quiz with id: {quiz_id} found"})
             return HttpResponse(serialized_errors, content_type="application/json", status=400)
         else: 
+            if quiz.created_by.id != user_id:
+                serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {quiz_id}"})
+                return HttpResponse(serialized_errors, content_type="application/json", status=400)
+
             new_question = Question.objects.create(
                 quiz=quiz,
                 text=text,
@@ -125,26 +134,95 @@ def add_question(request):
                     text=answer["text"],
                     correct=answer["correct"]
                 )
-
+        
                 answer_dict = {
+                "id": new_answer.id,
                 "text": new_answer.text,
                 "correct": new_answer.correct
                 }
                 answer_list.append(answer_dict)
 
             question_dict = {
+            "id": new_question.id,
             "text": new_question.text,
             "answers": answer_list
             }
             serialized_question = json.dumps(question_dict)
             return HttpResponse(serialized_question, content_type="application/json", status=200)
 
+# delete a question, if authorized
+def delete_question(request):
+    delete_dict = json.loads(request.body.decode())
+    question_id = delete_dict["question_id"]
+    user_id = delete_dict["user_id"]
+    try: 
+        question = Question.objects.get(id=question_id)
+    except:
+        serialized_errors = json.dumps({"message": f"no question with id: {question_id} found"})
+        return HttpResponse(serialized_errors, content_type="application/json", status=400)
+    else:
+        if question.quiz.created_by.id != user_id:
+            serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {question.quiz.id}"})
+            return HttpResponse(serialized_errors, content_type="application/json", status=400)
+
+        question.delete()
+        return HttpResponse(json.dumps({"message": f"question with id: {question_id} has been deleted"}), content_type="application/json", status=200)
+
+# create or update a score object for the current user and the quiz they took
 def save_score(request):
     if request.method == "POST":
-        pass
+        score_dict = json.loads(request.body.decode())
+        quiz_id = score_dict["quiz_id"]
+        user_id = score_dict["user_id"]
+        value = score_dict["value"]
+        try: 
+            quiz = Quiz.objects.get(id=quiz_id)
+        except:
+            serialized_errors = json.dumps({"message": f"no quiz with id: {quiz_id} found"})
+            return HttpResponse(serialized_errors, content_type="application/json", status=400)
+        else: 
+            try: 
+                user = User.objects.get(id=user_id)
+            except:
+                serialized_errors = json.dumps({"message": f"no user with id: {user_id} found"})
+                return HttpResponse(serialized_errors, content_type="application/json", status=400)
+            else: 
+                scores = Score.objects.filter(quiz=quiz_id, user=user_id)
+                if scores:
+                    updated_score = scores.first()
+                    updated_score.value = value
+                    updated_score.save()
+                    dict_obj = model_to_dict(updated_score, fields=['id','value', 'user', 'quiz'])
+                    serialized_score = json.dumps(dict_obj)
+                    return HttpResponse(serialized_score, content_type="application/json", status=200)
+                else:
+                    new_score = Score.objects.create(
+                        value=value,
+                        user=user,
+                        quiz=quiz
+                    )
+                dict_obj = model_to_dict(new_score, fields=['id','value', 'user', 'quiz'])
+                serialized_score = json.dumps(dict_obj)
+                return HttpResponse(serialized_score, content_type="application/json", status=200)
 
+# delete a quiz, if authorized
 def delete_quiz(request):
     if request.method == "DELETE":
+        delete_dict = json.loads(request.body.decode())
+        quiz_id = delete_dict["quiz_id"]
+        user_id = delete_dict["user_id"]
+        try:
+            quiz = Quiz.objects.get(id=quiz_id)
+        except: 
+            serialized_errors = json.dumps({"message": f"no quiz with id: {quiz_id} found"})
+            return HttpResponse(serialized_errors, content_type="application/json", status=400)
+        else:
+            if quiz.created_by.id != user_id:
+                serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {quiz_id}"})
+                return HttpResponse(serialized_errors, content_type="application/json", status=400)
+                
+            quiz.delete()
+            return HttpResponse(json.dumps({"message": f"quiz with id: {quiz_id} has been deleted"}), content_type="application/json", status=200)
         pass
 
  
