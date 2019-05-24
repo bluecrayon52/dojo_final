@@ -14,33 +14,32 @@
         <h1 class="card-title">Add A Question</h1>
         <hr>
         <form action="/addquestion" method="post">
-          {% csrf_token %}
-            <div class="form-group col">
+            <div class="form-group col-md-8">
                 <label for="Question">Question</label>
                 <input class="form-control" type='text' id="Question" name='Question'>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-md-8">
                 <label for="Answer 1">Answer 1</label>
                 <input class="form-control" type='text' id="Answer 1" name='Answer 1'>
                 <input type="radio" name="answer 1" value="answer 1"> Correct answer<br>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-md-8">
                 <label for="Answer 2">Answer 2</label>
                 <input class="form-control" type='text' id="Answer 2" name='Answer 2'>
                 <input type="radio" name="answer 2" value="answer 2"> Correct answer<br>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-md-8">
                 <label for="Answer 3">Answer 3</label>
                 <input class="form-control" type='text' id="Answer 3" name='Answer 3'>
                 <input type="radio" name="answer 3" value="answer 3"> Correct answer<br>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-md-8">
                 <label for="Answer 4">Answer 4</label>
                 <input class="form-control" type='text' id="Answer 4" name='Answer 4'>
                 <input type="radio" name="answer 4" value="answer 4"> Correct answer<br>
             </div>
             <hr>
-            <div class="row d-flex mr-1 justify-content-end">
+            <div class="row">
                 <button type="submit" class="form-group row btn btn-success">Create</button>
                 <button type="submit" class="form-group row btn btn-success">Done</button>
                 <button type="submit" class="form-group row btn btn-success">Delete Entire Quiz</button>
