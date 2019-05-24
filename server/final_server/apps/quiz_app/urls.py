@@ -6,6 +6,7 @@ urlpatterns = [
     path('get_one/', views.get_one),
     path('create/', views.create),
     path('add_question/', views.add_question),
+    path('delete_question/', views.delete_question),
     path('delete_quiz/', views.delete_quiz),
     path('save_score/', views.save_score), 
 ]
