@@ -12,7 +12,7 @@
         <div class= "nav">
           <button class = "nav" [routerLink]="['/dashboard']">Home</button>
           <button class = "nav" [routerLink]="['/newquiz']">Add a quiz</button>
-          <button class = "nav" [routerLink]="['/']">Logout</button>
+          <button class = "nav" (click)="Logout()">Logout</button>
         </div>
     </nav>
 </body>
