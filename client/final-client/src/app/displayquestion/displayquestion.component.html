@@ -12,11 +12,13 @@
 </head>
 <body>
   <app-logout></app-logout>
-  <h1>Your Quiz</h1>
-  <div class = "question">
-    <h3>Question # {{quizid}}</h3>
-    <p>Question</p>
-    <input type="radio" name="answer" value="answer"> Answer #<br>
+  <div *ngIf="quiz" >
+    <h1>{{quiz.name}}</h1>
+    <div *ngFor="let question of quiz.questions" class = "question">
+      <h3>{{question.text}}</h3>
+      <div *ngFor="let answer of question.answers"><p>{{answer.text}}</p></div>
+      <button type="submit" name="delete" value="delete"> delete</button>
+    </div>
   </div>
   <app-addquestion></app-addquestion>
 </body>

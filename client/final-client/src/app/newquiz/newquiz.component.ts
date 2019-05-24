@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from '../quiz.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class NewquizComponent implements OnInit {
   quizForm: FormGroup;
   quizErrors;
   user;
-  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder) { 
+  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder, private router: Router) { 
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -43,6 +44,7 @@ export class NewquizComponent implements OnInit {
     this.quiz_api.createQuiz(body).subscribe(
       resp => {
         console.log(resp);
+        this.router.navigate(['/edit/'+resp.id])
       },
       error => {
         console.log(error);
