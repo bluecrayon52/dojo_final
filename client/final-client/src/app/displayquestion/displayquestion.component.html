@@ -12,12 +12,23 @@
 </head>
 <body>
   <app-logout></app-logout>
-  <div *ngIf="quiz" >
-    <h1>{{quiz.name}}</h1>
-    <div *ngFor="let question of quiz.questions" class = "question">
-      <h3>{{question.text}}</h3>
-      <div *ngFor="let answer of question.answers"><p>{{answer.text}}</p></div>
-      <button type="submit" name="delete" value="delete"> delete</button>
+  <div *ngIf="quiz">
+    <h3 class="ml-5">{{quiz.name}}</h3>
+    <hr>
+    <div class="card-deck">
+      <div *ngFor="let question of quiz.questions" class="card">
+        <div class="card-header">
+          <h5>{{question.text}}</h5>
+        </div>
+        <div class="card-body">
+            <div *ngFor="let answer of question.answers">
+              <p>{{answer.text}}</p>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-secondary" (click)="onDelete()"> delete</button>
+        </div>
+      </div>
     </div>
   </div>
   <app-addquestion [quiz]="quiz"></app-addquestion>

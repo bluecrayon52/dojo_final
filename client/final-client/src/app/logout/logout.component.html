@@ -7,13 +7,14 @@
   <title>Document</title>
 </head>
 <body>
-    <nav class = "navbar">
-        <h1>Hello {{user.first_name}}</h1>
-        <div class= "nav">
-          <button class = "nav" [routerLink]="['/dashboard']">Home</button>
-          <button class = "nav" [routerLink]="['/newquiz']">Add a quiz</button>
-          <button class = "nav" (click)="Logout()">Logout</button>
+    <nav class = "navbar mt-3">
+        <h2>Hello {{user.first_name}}</h2>
+        <div class="nav">
+          <button class="btn ml-2 btn-info" [routerLink]="['/dashboard']">Home</button>
+          <button class="btn ml-2 btn-info" [routerLink]="['/newquiz']">Add a quiz</button>
+          <button class="btn ml-2 btn-info" (click)="Logout()">Logout</button>
         </div>
     </nav>
+    <hr>
 </body>
 </html>

@@ -42,20 +42,32 @@ export class AddquestionComponent implements OnInit {
   setCorrect(num) {
     if (num == 1){
       this.questionForm.controls['answer_2_correct'].reset();
+      this.questionForm.controls.answer_2_correct.setValue(false);
       this.questionForm.controls['answer_3_correct'].reset();
+      this.questionForm.controls.answer_3_correct.setValue(false);
       this.questionForm.controls['answer_4_correct'].reset();
+      this.questionForm.controls.answer_4_correct.setValue(false);
     } else if (num == 2){
       this.questionForm.controls['answer_1_correct'].reset();
+      this.questionForm.controls.answer_1_correct.setValue(false);
       this.questionForm.controls['answer_3_correct'].reset();
+      this.questionForm.controls.answer_3_correct.setValue(false);
       this.questionForm.controls['answer_4_correct'].reset();
+      this.questionForm.controls.answer_4_correct.setValue(false);
     } else if (num == 3) {
       this.questionForm.controls['answer_1_correct'].reset();
+      this.questionForm.controls.answer_1_correct.setValue(false);
       this.questionForm.controls['answer_2_correct'].reset();
+      this.questionForm.controls.answer_2_correct.setValue(false);
       this.questionForm.controls['answer_4_correct'].reset();
+      this.questionForm.controls.answer_4_correct.setValue(false);
     } else {
       this.questionForm.controls['answer_1_correct'].reset();
+      this.questionForm.controls.answer_1_correct.setValue(false);
       this.questionForm.controls['answer_2_correct'].reset();
+      this.questionForm.controls.answer_2_correct.setValue(false);
       this.questionForm.controls['answer_3_correct'].reset();
+      this.questionForm.controls.answer_3_correct.setValue(false);
     }
   }
 
@@ -78,17 +90,45 @@ export class AddquestionComponent implements OnInit {
     }
     let rawForm = this.questionForm.getRawValue()
     let answer_list = []
-    console.log(rawForm);
-    // let body = {quiz_id: this.quiz.id, user_id: this.user.id, text: rawForm.question_text, answers: []}
-    // this.quiz_api.addQuestion(body).subscribe(
-    //   resp => {
-    //     console.log(resp);
-    //     this.router.navigate(['/edit/'+this.quiz.id])
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // )
+    if (rawForm.answer_1) {
+      answer_list.push({
+        text: rawForm.answer_1,
+        correct: rawForm.answer_1_correct
+      })
+    }
+    if (rawForm.answer_2) {
+      answer_list.push({
+        text: rawForm.answer_2,
+        correct: rawForm.answer_2_correct
+      })
+    }
+    if (rawForm.answer_3) {
+      answer_list.push({
+        text: rawForm.answer_3,
+        correct: rawForm.answer_3_correct
+      })
+    }
+    if (rawForm.answer_4) {
+      answer_list.push({
+        text: rawForm.answer_4,
+        correct: rawForm.answer_4_correct
+      })
+    }
+
+    // console.log(answer_list);
+    let body = {quiz_id: this.quiz.id, user_id: this.user.id, text: rawForm.question_text, answers: answer_list}
+    console.log(body);
+    this.quiz_api.addQuestion(body).subscribe(
+      resp => {
+        console.log(resp);
+        this.quiz.questions.push(resp);
+        this.questionForm.reset();
+        this.router.navigate(['/edit/'+this.quiz.id])
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   onDelete() {
@@ -96,6 +136,7 @@ export class AddquestionComponent implements OnInit {
       return;
     }
     let body = { quiz_id: this.quiz.id, user_id: this.user.id }
+    console.log(body);
     this.quiz_api.deleteQuiz(body).subscribe(
       data => {
         console.log(data);

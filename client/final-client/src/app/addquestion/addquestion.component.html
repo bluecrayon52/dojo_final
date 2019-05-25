@@ -8,11 +8,10 @@
   <title>Document</title>
 </head>
 <body>
-  <div>
+  <div class="pt-3">
     <div class="card border-0 ml-5">
+      <h3 class="card-title">Add A Question</h3>
       <div class="card-body">
-        <h1 class="card-title">Add A Question</h1>
-        <hr>
         <form [formGroup]="questionForm" (ngSubmit)="createQuestion()">
             <div class="form-group col-md-8">
                 <label for="Question">Question</label>
@@ -36,16 +35,15 @@
                 <input formControlName="answer_3" class="form-control" type='text' id="Answer 3" name='Answer 3'>
                 <input formControlName="answer_3_correct" (click)="setCorrect(3)" type="radio" [value]="true"> Correct answer<br>
             </div>
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-8 mb-5">
                 <label for="Answer 4">Answer 4</label>
                 <input formControlName="answer_4" class="form-control" type='text' id="Answer 4" name='Answer 4'>
                 <input formControlName="answer_4_correct" (click)="setCorrect(4)" type="radio" [value]="true"> Correct answer<br>
             </div>
-            <hr>
-            <div class="row">
-                <button type="submit" class="form-group row btn btn-success">Create</button>
-                <button [routerLink]="['/dashboard']" class="form-group row btn btn-success">Done</button>
-                <button (click)="onDelete()" class="form-group row btn btn-success">Delete Entire Quiz</button>
+            <div class="form-group col-md-8 d-flex justify-content-end">
+                <button type="submit" class="btn btn-info ml-2">Create</button>
+                <button type="button" [routerLink]="['/dashboard']" class="btn btn-info ml-2">Done</button>
+                <button type="button" (click)="onDelete()" class="btn btn-info ml-2">Delete Entire Quiz</button>
             </div>
         </form>
       </div>
