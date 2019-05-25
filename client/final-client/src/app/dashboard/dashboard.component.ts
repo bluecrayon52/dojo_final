@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../quiz.service'
+import { Component, OnInit} from '@angular/core';
+import { QuizService } from '../quiz.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,19 +10,22 @@ import { QuizService } from '../quiz.service'
 export class DashboardComponent implements OnInit {
   quizzes;
   user;
-  constructor(private quiz_api: QuizService) {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-    this.getquizzes();
-    console.log(this.user);
-  }
+  constructor(private quiz_api: QuizService, private router: Router) {}
     
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.getQuizzes();
   }
-  getquizzes(){
+
+  setQuiz(quiz) {
+    localStorage.setItem('currentQuiz', JSON.stringify(quiz));
+  }
+
+  getQuizzes(){
     this.quiz_api.getAllQuizzes(this.user.id).subscribe(
       data => {
         this.quizzes = data;
-        console.log(data);
+        // console.log(data);
       },
       error=>{
         console.log(error);

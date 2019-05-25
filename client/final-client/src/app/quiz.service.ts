@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class QuizService {
   baseurl = "http://127.0.0.1:8000";
   httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-
+  quizObj; 
   constructor(private http: HttpClient) { }
-
+  
   createQuiz(quizData): Observable<any> {
     console.log('in quiz.service.ts:', quizData);
     return this.http.post(this.baseurl+'/quiz_api/create/', quizData,

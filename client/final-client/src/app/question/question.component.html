@@ -10,11 +10,26 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>Quiz Name {{quizid}}</h1>
-  <div>
-    <h3>Question #</h3>
-    <p>Question</p>
-    <input type="radio" name="answer" value="answer">Answer #<br>
-  </div>
+  <app-logout></app-logout>
+  <h3 class="ml-3 mb-3">{{quiz.name}}</h3>
+  <hr>
+  <form [formGroup]="answerForm" (ngSubmit)="gradeQuiz()">
+  <!-- <form> -->
+    <div *ngFor="let question of quiz.questions" class="mx-5 mb-2 card">
+      <div class="col card-header">
+          <h4>{{question.text}}</h4>
+          <small class="text-danger mb-3 ml-1 row">{{questionErrors["question_"+question.id]}}</small>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let answer of question.answers" class="form-check">
+          <input formControlName="answer_{{answer.id}}" type="radio" (click)="setAnswer(question, answer.id)" [value]="true" class="form-check-input" id="{{answer.id}}">
+          <label class="ml-3 form-check-label" for="{{answer.id}}">{{answer.text}}</label>
+        </div>
+      </div>
+    </div>
+    <div class ="col d-flex justify-content-end">
+        <button (click)="gradeQuiz()" class="mr-5 my-3 btn btn-info">Submit</button>
+    </div>
+  </form>
 </body>
 </html>

@@ -8,19 +8,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./displayquestion.component.css']
 })
 export class DisplayquestionComponent implements OnInit {
-  quizid:number;
   quiz;
   user;
-  constructor(private route:ActivatedRoute, private quiz_api:QuizService) {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
+  constructor(private activatedRoute: ActivatedRoute, private quiz_api: QuizService) {}
 
   ngOnInit() {
-    this.quizid = +this.route.snapshot.paramMap.get('quizid')
-    this.getQuiz()
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.quiz = JSON.parse(localStorage.getItem('currentQuiz'));
+    // this.getQuiz();
   }
+
   getQuiz() {
-    let body = {quiz_id: this.quizid, user_id: this.user.id}
+    let body = {quiz_id: this.quiz.id, user_id: this.user.id}
     this.quiz_api.getQuiz(body).subscribe(
       resp => {
         this.quiz = resp
@@ -31,4 +30,21 @@ export class DisplayquestionComponent implements OnInit {
       }
     )
   }
+
+  onDelete(question) {
+    if (this.quiz.created_by.id != this.user.id) {
+      return;
+    }
+    let body = {question_id: question.id, user_id: this.user.id}
+    console.log(body);
+    this.quiz_api.deleteQuestion(body).subscribe(
+      resp => {
+        console.log(resp);
+        this.getQuiz();
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  } 
 }

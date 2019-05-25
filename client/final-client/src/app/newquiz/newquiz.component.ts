@@ -13,11 +13,10 @@ export class NewquizComponent implements OnInit {
   quizForm: FormGroup;
   quizErrors;
   user;
-  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder, private router: Router) { 
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
+  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.quizForm = this.formBuilder.group({
       quizName: ['', [Validators.required, Validators.minLength(5)]],
     });

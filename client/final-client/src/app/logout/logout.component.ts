@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
   user;
-  constructor(private router: Router) {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-   }
+  constructor(private router: Router) {}
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
+  
   Logout(){
     localStorage.clear();
     this.router.navigate([''])

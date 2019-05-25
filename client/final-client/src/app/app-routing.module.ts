@@ -13,9 +13,9 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', component:LoginRegComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'newquiz', component:NewquizComponent},
-  {path: 'edit/:quizid', component:DisplayquestionComponent},
+  {path: 'edit', component:DisplayquestionComponent},
   {path: 'yourscore', component:YourscoreComponent},
-  {path: 'play/:quizid', component:QuestionComponent},
+  {path: 'play', component:QuestionComponent},
   {path: 'edit', component:DisplayquestionComponent},
   {path: '**', component:NotfoundComponent},
 ];

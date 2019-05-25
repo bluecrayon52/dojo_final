@@ -22,11 +22,11 @@
             <tbody>
               <tr *ngFor="let quiz of quizzes">
                 <td>{{quiz.name}}</td>
-                <td *ngIf="quiz.score >=0">{{quiz.score}}</td>
+                <td *ngIf="quiz.score >=0">{{quiz.score}} out of {{quiz.questions.length}}</td>
                 <td *ngIf="quiz.score < 0">No Score Yet</td>
                 <td>
-                  <a href="/play/{quizid}">Play </a>
-                  <a *ngIf="quiz.created_by.id == user.id" href="/edit/{quizid}">Edit </a>
+                  <a href="/play" (click)="setQuiz(quiz)">Play </a>
+                  <a *ngIf="quiz.created_by.id == user.id" href="/edit" (click)="setQuiz(quiz)" >Edit </a>
                   <a *ngIf="quiz.created_by.id == user.id" href="/dashboard" (click)="onDelete(quiz)">Delete </a>
                 </td>
               </tr>

@@ -11,15 +11,21 @@
 </head>
 <body>
   <app-logout></app-logout>
-  <h1 class="yourscore">Your Score</h1>
-  <div class="scorecube">
-    <h3 class = "lastscore">3 out of 4</h3>
+  <div class="d-flex justify-content-center">
+    <h1>Your Score</h1>
   </div>
-  <form action="/play/{{quizid}}" method="post">
-    <div class="row">
-        <button type="submit" class="form-group row btn btn-success">Save Score</button>
-        <button type="submit" class="form-group row btn btn-success">Try Again</button>
+    <div class="d-flex justify-content-center">
+    <div class="scorecube">
+      <h3 class="mt-5 lastscore">{{score}} out of {{quiz.questions.length}}</h3>
     </div>
-  </form>
+  </div>
+  <!-- <h1 class="yourscore">Your Score</h1>
+  <div class="scorecube">
+    <h3 class="lastscore">{{score}} out of {{quiz.questions.length}}</h3>
+  </div> -->
+  <div class="col pr-5 mt-3 d-flex justify-content-end">
+      <button class="form-group row btn btn-success">Save Score</button>
+      <button class="ml-4 form-group row btn btn-success">Try Again</button>
+  </div>
 </body>
 </html>

@@ -13,11 +13,10 @@ export class AddquestionComponent implements OnInit {
   questionForm: FormGroup;
   questionErrors;
   user;
-  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder, private router: Router) { 
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
+  constructor(private quiz_api: QuizService, private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.questionForm = this.formBuilder.group({
       question_text: ['', [Validators.required, Validators.minLength(5)]],
       answer_1: ['', Validators.required],
@@ -84,7 +83,7 @@ export class AddquestionComponent implements OnInit {
         this.questionErrors.answer_1 = "answer 1 is required";
       }
       if (form.answer_2.errors) {
-        this.questionErrors.answer_1 = "answer 2 is required";
+        this.questionErrors.answer_2 = "answer 2 is required";
       }
       return;
     }
@@ -123,7 +122,7 @@ export class AddquestionComponent implements OnInit {
         console.log(resp);
         this.quiz.questions.push(resp);
         this.questionForm.reset();
-        this.router.navigate(['/edit/'+this.quiz.id])
+        this.router.navigate(['/edit'])
       },
       error => {
         console.log(error);
