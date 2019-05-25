@@ -47,7 +47,8 @@ export class NewquizComponent implements OnInit {
     this.quiz_api.createQuiz(body).subscribe(
       resp => {
         console.log(resp);
-        this.router.navigate(['/edit/'+resp.id])
+        localStorage.setItem('currentQuiz', JSON.stringify(resp));
+        this.router.navigate(['/edit'])
       },
       error => {
         console.log(error);
