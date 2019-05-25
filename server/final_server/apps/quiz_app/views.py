@@ -164,7 +164,7 @@ def delete_question(request, question_id, user_id):
             serialized_errors = json.dumps({"message": f"no question with id: {question_id} found"})
             return HttpResponse(serialized_errors, content_type="application/json", status=400)
         else:
-            if question.quiz.created_by.id != user_id:
+            if question.quiz.created_by.id != int(user_id):
                 serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {question.quiz.id}"})
                 return HttpResponse(serialized_errors, content_type="application/json", status=400)
 
