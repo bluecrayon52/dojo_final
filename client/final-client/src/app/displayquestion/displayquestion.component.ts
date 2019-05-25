@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from '../quiz.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-displayquestion',
@@ -10,10 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 export class DisplayquestionComponent implements OnInit {
   quiz;
   user;
-  constructor(private activatedRoute: ActivatedRoute, private quiz_api: QuizService) {}
+  constructor(private activatedRoute: ActivatedRoute, private quiz_api: QuizService, private router: Router) {}
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user === null) {
+      this.router.navigate([''])
+    }
     this.quiz = JSON.parse(localStorage.getItem('currentQuiz'));
     // this.getQuiz();
   }

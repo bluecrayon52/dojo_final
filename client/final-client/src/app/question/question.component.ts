@@ -17,6 +17,9 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user === null) {
+      this.router.navigate([''])
+    }
     this.quiz = JSON.parse(localStorage.getItem('currentQuiz'));
     let controllers ={};
     for(let question of this.quiz.questions) {

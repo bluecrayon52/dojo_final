@@ -14,6 +14,9 @@ export class DashboardComponent implements OnInit {
     
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user === null) {
+      this.router.navigate([''])
+    }
     this.getQuizzes();
   }
 

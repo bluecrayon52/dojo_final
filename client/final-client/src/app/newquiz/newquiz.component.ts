@@ -17,6 +17,10 @@ export class NewquizComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user === null) {
+      this.router.navigate([''])
+    }
+
     this.quizForm = this.formBuilder.group({
       quizName: ['', [Validators.required, Validators.minLength(5)]],
     });

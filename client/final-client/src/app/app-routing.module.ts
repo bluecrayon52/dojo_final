@@ -16,7 +16,6 @@ const routes: Routes = [
   {path: 'edit', component:DisplayquestionComponent},
   {path: 'yourscore', component:YourscoreComponent},
   {path: 'play', component:QuestionComponent},
-  {path: 'edit', component:DisplayquestionComponent},
   {path: '**', component:NotfoundComponent},
 ];
 
