@@ -11,6 +11,7 @@
   <div class="pt-3">
     <div class="card border-0 ml-5">
       <h3 class="card-title">Add A Question</h3>
+      <small class="text-danger mb-3 ml-1 row">{{questionErrors.correct}}</small>
       <div class="card-body">
         <form [formGroup]="questionForm" (ngSubmit)="createQuestion()">
             <div class="form-group col-md-8">

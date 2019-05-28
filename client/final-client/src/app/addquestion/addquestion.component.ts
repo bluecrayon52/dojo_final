@@ -34,7 +34,8 @@ export class AddquestionComponent implements OnInit {
     this.questionErrors = {
       question_text: '',
       answer_1: '',
-      answer_2: ''
+      answer_2: '',
+      correct: ''
     }
   }
 
@@ -74,19 +75,24 @@ export class AddquestionComponent implements OnInit {
     this.setQuestionErrors();
     if (this.questionForm.invalid) {
       let form = this.questionForm.controls;
-      if (form.question_text.errors.required) {
-        this.questionErrors.question_text = "question text is required"
-      } else if (form.question_text.errors.minlength) {
-        this.questionErrors.question_text = "question text must be at least five characters long"
+      console.log(form);
+      if (form.question_text.errors) {
+        if (form.question_text.errors.required) {
+          this.questionErrors.question_text = "question text is required"
+        } else if (form.question_text.errors.minlength) {
+          this.questionErrors.question_text = "question text must be at least five characters long"
+        }
       }
       if (form.answer_1.errors) {
         this.questionErrors.answer_1 = "answer 1 is required";
       }
       if (form.answer_2.errors) {
         this.questionErrors.answer_2 = "answer 2 is required";
+        console.log(this.questionErrors.answer_2);
       }
       return;
     }
+  
     let rawForm = this.questionForm.getRawValue()
     let answer_list = []
     if (rawForm.answer_1) {
@@ -115,6 +121,18 @@ export class AddquestionComponent implements OnInit {
     }
 
     // console.log(answer_list);
+    let incorrect = 0;
+    for (let answer of answer_list) {
+      // console.log(answer.correct)
+      if (!answer.correct) {
+        incorrect++;
+      }
+    }
+    if (incorrect === answer_list.length){
+      this.questionErrors.correct = "Mark at least one answer as correct";
+      return;
+    }
+    
     let body = {quiz_id: this.quiz.id, user_id: this.user.id, text: rawForm.question_text, answers: answer_list}
     console.log(body);
     this.quiz_api.addQuestion(body).subscribe(
