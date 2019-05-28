@@ -86,24 +86,22 @@ def get_one(request, quiz_id, user_id):
 # create a new quiz, initialize with name and user_id only 
 # return new quiz id and name
 def create(request):
-    print("Testing")
     if request.method == "POST":
-        print("In quiz_app,views", request.body.decode())
         quiz_dict = json.loads(request.body.decode())
         user_id = quiz_dict["user_id"]
-        try: 
-            user = User.objects.get(id=user_id)
-        except:
-            serialized_errors = json.dumps({"message": f"no user with id: {user_id} found"})
+        errors = Quiz.objects.quiz_validator(quiz_dict)
+        if len(errors) > 0:
+            # serialize python object (dictionary) to a JSON string
+            serialized_errors = json.dumps(errors)
             return HttpResponse(serialized_errors, content_type="application/json", status=400)
-        else: 
-            new_quiz = Quiz.objects.create(
-                name=quiz_dict["name"],
-                created_by=user
-            )
-            dict_obj = model_to_dict(new_quiz, fields=['id','name'])
-            serialized_quiz = json.dumps(dict_obj)
-            return HttpResponse(serialized_quiz, content_type="application/json", status=200)
+        
+        new_quiz = Quiz.objects.create(
+            name=quiz_dict["name"],
+            created_by= User.objects.get(id=user_id)
+        )
+        dict_obj = model_to_dict(new_quiz, fields=['id','name'])
+        serialized_quiz = json.dumps(dict_obj)
+        return HttpResponse(serialized_quiz, content_type="application/json", status=200)
 
 # TODO add validation to a manager
 # add a question and answers to an existing quiz, if authorized
@@ -112,55 +110,40 @@ def add_question(request):
     if request.method == "POST":
         question_dict = json.loads(request.body.decode())
         quiz_id = question_dict["quiz_id"]
-        user_id = question_dict["user_id"]
         text = question_dict["text"]
         answers = question_dict["answers"]
-        try: 
-            quiz = Quiz.objects.get(id=quiz_id)
-        except:
-            serialized_errors = json.dumps({"message": f"no quiz with id: {quiz_id} found"})
+        errors = Question.objects.question_validator(question_dict)
+        if len(errors) > 0:
+            serialized_errors = json.dumps(errors)
             return HttpResponse(serialized_errors, content_type="application/json", status=400)
-        else: 
-            if quiz.created_by.id != user_id:
-                serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {quiz_id}"})
-                return HttpResponse(serialized_errors, content_type="application/json", status=400)
 
-            # check for at least on correct answer
-            incorrect = 0
-            for answer in answers:
-                if (not answer["correct"]):
-                    incorrect += 1
-            if incorrect == len(answers):
-                serialized_errors = json.dumps({"message": f"at least one answer must be marked as correct"})
-                return HttpResponse(serialized_errors, content_type="application/json", status=400)
-
-            new_question = Question.objects.create(
-                quiz=quiz,
-                text=text,
-            )
-            
-            answer_list =[]
-            for answer in answers:
-                new_answer = Answer.objects.create(
-                    question=new_question,
-                    text=answer["text"],
-                    correct=answer["correct"]
-                )
+        new_question = Question.objects.create(
+            quiz= Quiz.objects.get(id=quiz_id),
+            text=text,
+        )
         
-                answer_dict = {
-                "id": new_answer.id,
-                "text": new_answer.text,
-                "correct": new_answer.correct
-                }
-                answer_list.append(answer_dict)
-
-            question_dict = {
-            "id": new_question.id,
-            "text": new_question.text,
-            "answers": answer_list
+        answer_list =[]
+        for answer in answers:
+            new_answer = Answer.objects.create(
+                question=new_question,
+                text=answer["text"],
+                correct=answer["correct"]
+            )
+    
+            answer_dict = {
+            "id": new_answer.id,
+            "text": new_answer.text,
+            "correct": new_answer.correct
             }
-            serialized_question = json.dumps(question_dict)
-            return HttpResponse(serialized_question, content_type="application/json", status=200)
+            answer_list.append(answer_dict)
+
+        question_dict = {
+        "id": new_question.id,
+        "text": new_question.text,
+        "answers": answer_list
+        }
+        serialized_question = json.dumps(question_dict)
+        return HttpResponse(serialized_question, content_type="application/json", status=200)
 
 # delete a question, if authorized
 def delete_question(request, question_id, user_id):
