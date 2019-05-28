@@ -138,7 +138,12 @@ export class AddquestionComponent implements OnInit {
     this.quiz_api.addQuestion(body).subscribe(
       resp => {
         console.log(resp);
-        this.quiz.questions.push(resp);
+        if (this.quiz.questions) {
+          this.quiz.questions.push(resp);
+        } else {
+          this.quiz.questions = [];
+          this.quiz.questions.push(resp);
+        }
         this.questionForm.reset();
         this.router.navigate(['/edit'])
       },
