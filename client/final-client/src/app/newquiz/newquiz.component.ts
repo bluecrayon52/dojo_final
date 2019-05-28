@@ -52,6 +52,9 @@ export class NewquizComponent implements OnInit {
       },
       error => {
         console.log(error);
+        if (error.name) {
+          this.quizErrors.quizName = error.name;
+        }
       }
     )
   }

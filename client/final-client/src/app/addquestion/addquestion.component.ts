@@ -148,7 +148,12 @@ export class AddquestionComponent implements OnInit {
         this.router.navigate(['/edit'])
       },
       error => {
-        console.log(error);
+        if (error.correct){
+          this.questionErrors.correct = error.correct;
+        }
+        if (error.question_text){
+          this.questionErrors.question_text = error.question_text;
+        }
       }
     )
   }
