@@ -23,10 +23,10 @@ export class AddquestionComponent implements OnInit {
       answer_2: ['', Validators.required],
       answer_3: [''],
       answer_4: [''],
-      answer_1_correct: [''],
-      answer_2_correct: [''],
-      answer_3_correct: [''],
-      answer_4_correct: ['']
+      answer_1_correct: [false],
+      answer_2_correct: [false],
+      answer_3_correct: [false],
+      answer_4_correct: [false]
     });
     this.setQuestionErrors();
   }
@@ -132,7 +132,7 @@ export class AddquestionComponent implements OnInit {
       this.questionErrors.correct = "Mark at least one answer as correct";
       return;
     }
-    
+
     let body = {quiz_id: this.quiz.id, user_id: this.user.id, text: rawForm.question_text, answers: answer_list}
     console.log(body);
     this.quiz_api.addQuestion(body).subscribe(

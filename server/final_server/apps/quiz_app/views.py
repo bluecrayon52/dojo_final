@@ -125,10 +125,20 @@ def add_question(request):
                 serialized_errors = json.dumps({"message": f"user with id: {user_id} is not authorized to edit quiz with id: {quiz_id}"})
                 return HttpResponse(serialized_errors, content_type="application/json", status=400)
 
+            # check for at least on correct answer
+            incorrect = 0
+            for answer in answers:
+                if (not answer["correct"]):
+                    incorrect += 1
+            if incorrect == len(answers):
+                serialized_errors = json.dumps({"message": f"at least one answer must be marked as correct"})
+                return HttpResponse(serialized_errors, content_type="application/json", status=400)
+
             new_question = Question.objects.create(
                 quiz=quiz,
                 text=text,
             )
+            
             answer_list =[]
             for answer in answers:
                 new_answer = Answer.objects.create(
